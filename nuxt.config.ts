@@ -1,4 +1,3 @@
-// @ts-expect-error Node.js type definitions are not available in this project.
 import dns from 'node:dns'
 
 dns.setDefaultResultOrder('ipv4first')

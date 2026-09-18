@@ -92,7 +92,11 @@ export function useOscarData() {
                 name: nombrePersona || 'Anónimo',
                 totalNominations: 1,
                 winnersCount: nd.ganador ? 1 : 0,
-                description: `${nd.ganador ? 'Ganador' : 'Nominado'} del Oscar a ${nombreCategoria}`
+                description: (() => {
+                    const winnerText = nd.ganador ? 'Ganador' : 'Nominado';
+                    const base = `${winnerText} del Oscar a ${nombreCategoria} en ${pf.anio || 'N/A'}`;
+                    return nombrePersona ? `${base} - ${nombrePersona}` : base;
+                })()
             };
             });
             
@@ -397,6 +401,6 @@ export function useOscarData() {
         getTopNominatedActors,
         getTopCategories,
         getWinnersByDecade,
-        translateCategory 
+        translateCategory,
     };
 }

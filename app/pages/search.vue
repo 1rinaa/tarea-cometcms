@@ -348,15 +348,18 @@ const results = computed(() => {
         filtered = filtered.filter(item => item.winner !== true);
     }
     
-    // ✅ FILTRO POR PAÍS
     if (country) {
         filtered = filtered.filter(item => 
             item.country?.toLowerCase() === country.toLowerCase()
         );
     }
-
-     const sort = route.query.sort || 'year_desc';
-    let sorted = [...filtered];
+    
+    // ✅ NUEVO: agrupar por película DESPUÉS de filtrar
+    const grouped = filtered;
+    
+    // Ordenar los grupos
+    const sort = route.query.sort || 'year_desc';
+    let sorted = [...grouped];
     
     switch (sort) {
         case 'year_desc':

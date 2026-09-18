@@ -266,21 +266,21 @@
                     <h3 class="font-display text-lg font-bold text-[#1A1410] dark:text-[#F3E09C] mb-4">
                         Resultados
                     </h3>
-                    <div v-if="filteredResults.length === 0" class="text-center py-8">
+                    <div v-if="filteredGroupedByFilm.length === 0" class="text-center py-8">
                         <p class="text-[#55565A]/60 dark:text-[#F3E09C]/40">No se encontraron resultados</p>
                     </div>
                     <div v-else class="space-y-3">
                         <OscarCard 
-                            v-for="(item, index) in filteredResults.slice(0, 5)" 
+                            v-for="(item, index) in filteredGroupedByFilm.slice(0, 5)" 
                             :key="index"
                             :item="item"
                         />
                         <NuxtLink 
-                            v-if="filteredResults.length > 5"
+                            v-if="filteredGroupedByFilm.length > 5"
                             :to="searchRoute"
                             class="block text-center text-[#BEA260] hover:text-[#F3E09C] transition-colors duration-300 text-sm mt-4"
                         >
-                            Ver todos los {{ filteredResults.length }} resultados →
+                            Ver todos los {{ filteredGroupedByFilm.length }} resultados →
                         </NuxtLink>
                     </div>
                 </div>
@@ -370,7 +370,7 @@ const hasFilters = computed(() => {
     return filters.value.year || filters.value.yearFrom || filters.value.yearTo || filters.value.category || filters.value.status;
 });
 
-const filteredResults = computed(() => {
+const filteredGroupedByFilm = computed(() => {
     let results = data.value || [];
     
     // Filtro por año específico
