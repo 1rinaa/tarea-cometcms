@@ -272,10 +272,8 @@ const router = useRouter();
 const { data, loadData, loading, getYears, getCategories, getCountries } = useOscarData();
 const selectedSort = ref(route.query.sort || 'year_desc');
 
-// ✅ DECLARAR selectedCountry como ref
 const selectedCountry = ref(route.query.country || '');
 
-// ✅ Obtener países del composable
 const countries = computed(() => getCountries.value || []);
 
 const breadcrumbs = computed(() => {
