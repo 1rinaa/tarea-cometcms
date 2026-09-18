@@ -1,3 +1,9 @@
+// @ts-expect-error Node.js type definitions are not available in this project.
+import dns from 'node:dns'
+
+dns.setDefaultResultOrder('ipv4first')
+dns.setServers(['8.8.8.8', '1.1.1.1', '192.168.50.1'])
+
 export default defineNuxtConfig({
   devtools: { enabled: true },
   
@@ -7,12 +13,17 @@ export default defineNuxtConfig({
     { path: '~/components', pathPrefix: false }
   ],
 
-   postcss: {
+  postcss: {
     plugins: {
       tailwindcss: {},
       autoprefixer: {},
     }
   },
   
-  compatibilityDate: '2026-06-30'
+  compatibilityDate: '2026-06-30',
+
+  runtimeConfig: {
+    cometUrl: 'https://cms-una.gt.tc',
+    cometWorkspace: 'default'
+  }
 })

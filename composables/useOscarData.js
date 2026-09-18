@@ -36,19 +36,68 @@ export function useOscarData() {
         error.value = null;
         
         try {
-            const response = await fetch('/data/oscar-data.json');
-            if (!response.ok) throw new Error('Error al cargar los datos');
+            // Traemos TODO en paralelo
+           const [nomRes, peliRes, catRes, perRes] = await Promise.all([
+            $fetch('/api/comet/content/nominaciones', { query: { limit: 100 } }),
+            $fetch('/api/comet/content/peliculas', { query: { limit: 100 } }),
+            $fetch('/api/comet/content/categorias', { query: { limit: 100 } }),
+            $fetch('/api/comet/content/personas', { query: { limit: 100 } })
+          ]);
             
-            const rawData = await response.json();
+            const nominaciones = nomRes.data || [];
+            const peliculas = peliRes.data || [];
+            const categorias = catRes.data || [];
+            const personas = perRes.data || [];
             
-            // ✅ Los datos ya vienen con país, categoría traducida y poster
-            data.value = rawData.map(item => ({
-                ...item,
-                winner: Boolean(item.winner)
-            }));
+            console.log('📦 Crudos:', {
+            nominaciones: nominaciones.length,
+            peliculas: peliculas.length,
+            categorias: categorias.length,
+            personas: personas.length
+            });
+    
             
-            console.log('✅ Datos cargados:', data.value.length, 'registros');
-            console.log('🌍 Países disponibles:', [...new Set(data.value.map(item => item.country))].sort());
+            // Índices por id para búsqueda rápida
+            const peliMap = Object.fromEntries(peliculas.map(p => [p.id, p]));
+            const catMap = Object.fromEntries(categorias.map(c => [c.id, c]));
+            const perMap = Object.fromEntries(personas.map(p => [p.id, p]));
+            
+            // Transformación
+            data.value = nominaciones.map(nom => {
+            const nd = nom.data || {};
+            const peli = peliMap[nd.pel_cula] || {};
+            const cat = catMap[nd.categoria] || {};
+            const per = perMap[nd.persona] || null;
+            
+            const pf = peli.data || {};
+            const cf = cat.data || {};
+            const perf = per ? (per.data || {}) : null;
+            
+            const nombrePersona = perf?.nombre || null;
+            const nombreCategoria = cf.nombre || cat.title || 'Sin categoría';
+            const tituloPeli = pf.titulo || peli.title || 'Desconocida';
+            
+            return {
+                id: nom.id,
+                film: tituloPeli,
+                category: nombreCategoria,
+                year_ceremony: pf.anio || 0,
+                year_film: pf.anio || 0,
+                ceremony: pf.anio || 0,
+                poster: (pf.poster && pf.poster[0]) ? pf.poster[0] : '/posters/placeholder.jpg',
+                country: 'Estados Unidos',
+                winner: Boolean(nd.ganador),
+                people: nombrePersona ? [nombrePersona] : [],
+                allNames: nombrePersona ? [nombrePersona] : [],
+                name: nombrePersona || 'Anónimo',
+                totalNominations: 1,
+                winnersCount: nd.ganador ? 1 : 0,
+                description: `${nd.ganador ? 'Ganador' : 'Nominado'} del Oscar a ${nombreCategoria}`
+            };
+            });
+            
+            console.log('✅ Transformados:', data.value.length);
+            console.log('📊 Primer registro:', data.value[0]);
         } catch (err) {
             error.value = err.message;
             console.error('❌ Error:', err);
