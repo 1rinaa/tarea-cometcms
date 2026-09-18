@@ -18,6 +18,10 @@ export default defineNuxtConfig({
       autoprefixer: {},
     }
   },
+
+  nitro: {
+    preset: 'netlify'
+  },
   
   compatibilityDate: '2026-06-30',
 
