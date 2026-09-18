@@ -1,7 +1,9 @@
 import dns from 'node:dns'
 
-dns.setDefaultResultOrder('ipv4first')
-dns.setServers(['8.8.8.8', '1.1.1.1', '192.168.50.1'])
+if (process.env.NODE_ENV !== 'production') {
+  dns.setDefaultResultOrder('ipv4first')
+  dns.setServers(['8.8.8.8', '1.1.1.1'])
+}
 
 export default defineNuxtConfig({
   devtools: { enabled: true },
