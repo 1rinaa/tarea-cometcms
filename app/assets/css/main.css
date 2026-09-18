@@ -1,0 +1,153 @@
+/* ✅ TODOS LOS @import PRIMERO */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* ✅ Fuente Futura PT (alternativa más cercana) */
+@import url('https://fonts.cdnfonts.com/css/futura-pt');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Reset y estilos base */
+* {
+    transition: background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease, box-shadow 0.4s ease;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #FAF7F2;
+    color: #2D231E;
+}
+
+.dark body {
+    background-color: #0A0808;
+    color: #F5EDE0;
+}
+
+/* ✅ Títulos con Futura PT */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Futura PT', 'Century Gothic', 'CenturyGothic', 'Apple Gothic', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+/* Subtítulos con Futura PT ligera */
+.subtitle {
+    font-family: 'Futura PT', 'Century Gothic', sans-serif;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+}
+
+/* ✅ Scrollbar elegante */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #F5EDE0;
+}
+
+.dark ::-webkit-scrollbar-track {
+    background-color: #14110f;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #BEA260;
+    border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #A8873A;
+}
+
+/* ✅ Texto dorado mejorado */
+.gold-text {
+    background: linear-gradient(135deg, #F3E09C 0%, #BEA260 40%, #F3E09C 70%, #BEA260 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 4px 30px rgba(190, 162, 96, 0.3));
+    background-size: 200% 200%;
+    animation: goldShimmer 4s ease-in-out infinite;
+}
+
+@keyframes goldShimmer {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+/* Card elegante con tonos oscuros */
+.card-oscar {
+    background-color: #FFFFFF;
+    border-radius: 1rem;
+    border: 1px solid rgba(190, 162, 96, 0.15);
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 32px rgba(10, 8, 8, 0.06);
+}
+
+.dark .card-oscar {
+    background-color: #1A1A1A;  
+    border-color: rgba(190, 162, 96, 0.1);
+}
+
+.card-oscar:hover {
+    box-shadow: 0 8px 40px rgba(190, 162, 96, 0.12);
+}
+
+/* ✅ Botón dorado */
+.btn-gold {
+    background: linear-gradient(135deg, #F3E09C 0%, #BEA260 50%, #F3E09C 100%);
+    color: #0A0808;
+    font-family: 'Futura PT', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.btn-gold:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 50px rgba(190, 162, 96, 0.4);
+}
+
+/* ✅ Shimmer */
+.shimmer {
+    background: linear-gradient(90deg, transparent 0%, rgba(190, 162, 96, 0.1) 50%, transparent 100%);
+    background-size: 200% 100%;
+    animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+/* ✅ Animaciones */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(3deg); }
+}
+
+.animate-fade-up {
+    animation: fadeUp 0.8s ease-out both;
+}
+
+.animate-float {
+    animation: float 4s ease-in-out infinite;
+}
