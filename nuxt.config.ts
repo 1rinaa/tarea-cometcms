@@ -20,7 +20,7 @@ export default defineNuxtConfig({
   },
 
   nitro: {
-    preset: 'netlify'
+    preset: 'vercel' // Asegura la compatibilidad con Vercel
   },
   
   compatibilityDate: '2026-06-30',
